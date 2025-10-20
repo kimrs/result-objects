@@ -1,3 +1,3 @@
-﻿namespace Api.Persons.GetAll;
+﻿namespace Api.Persons.GetAlls;
 
 public record Dto(string[] Names);

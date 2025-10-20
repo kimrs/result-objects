@@ -1,3 +1,3 @@
-﻿namespace Repositories;
+﻿namespace Persistence;
 
 public class FullDbException : Exception;

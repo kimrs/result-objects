@@ -1,25 +1,29 @@
-using Repositories;
-using CreatePerson = Api.Persons.Create;
-using GetAllPersons = Api.Persons.GetAll;
+using Api.Persons.Enrolls;
+using Api.Persons.GetAlls;
+using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddOpenApi()
-    .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly))
     .AddRepositories();
 
 var app = builder.Build();
+app.UseExceptionHandler("/Error");
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
 
 
-app.MapPost("/person/", CreatePerson.Delegates.Delegate);
-app.MapGet("/person/", GetAllPersons.Delegates.Delegate);
+app.MapPost("/person/", Enroll.Handle);
+app.MapGet("/person/", GetAll.Handle);
+app.Map("/Error",
+        (HttpContext _) => Microsoft.AspNetCore.Http.Results.Problem(statusCode: StatusCodes.Status500InternalServerError))
+    .ExcludeFromDescription();
 
 app.Run();

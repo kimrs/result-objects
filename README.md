@@ -7,8 +7,10 @@ It also ensures a clear separation between different integrations.
 
 The application is divided into:
 
-- **Mt.Domain** – Business logic  
-- **Mt.Api** – Entrypoint for migration  
+- **Krs.Domain** - Business logic  
+- **Krs.Api** - Entrypoint for migration  
+- **Krs.Persistence** - Integration against the database
+- **Krs.Facebook** - Integration against Facebook
 
 ---
 
@@ -75,13 +77,13 @@ We consider this unnecessary because the namespace already provides that context
 
 ### ❌ Don’t:
 ```csharp
-namespace Mt.Domain.Persons.Create;
+namespace Kimrs.Domain.Persons.Create;
 class CreatePersonCommand;
 ```
 
 ### ✅ Do:
 ```csharp
-namespace Mt.Domain.Persons.Create;
+namespace Kimrs.Domain.Persons.Create;
 class Command;
 ```
 
@@ -115,7 +117,7 @@ Domain
 ## Favour the Whole Namespace Over `aliases` When Types Collide
 ### ❌ Don’t:
 ```csharp
-using DomainResponse = Mt.Domain.Persons.Create.Response;
+using DomainResponse = Kimrs.Domain.Persons.Create.Response;
 
 public Response ToDto(
     this DomainResponse response
@@ -124,7 +126,7 @@ public Response ToDto(
 ### ✅ Do:
 ```csharp
 public Response ToDto(
-    this Mt.Domain.Persons.Create.Response response
+    this Kimrs.Domain.Persons.Create.Response response
 );
 ```
 We are divided on this rule and will revisit it in two months.
@@ -183,18 +185,18 @@ public class Person
 
 ---
 
-## Mt.Domain
+## Kimrs.Domain
 This project contains the **business logic** of the application. It has the most restrictive guidelines.
 
 ### No Dependencies on External Systems
-`Mt.Domain` may depend on other *pure* projects (e.g., `Mt.Shared`) but not on projects that interact with external systems (e.g., `Mt.Api`, `Mt.Persistence`) or NuGet packages that are not maintained by us.  
+`Kimrs.Domain` may depend on other *pure* projects (e.g., `Kimrs.Shared`) but not on projects that interact with external systems (e.g., `Kimrs.Api`, `Kimrs.Persistence`) or NuGet packages that are not maintained by us.  
 
-Keeping `Mt.Domain` pure ensures that we can change external systems without affecting business logic.
+Keeping `Kimrs.Domain` pure ensures that we can change external systems without affecting business logic.
 
 ---
 
 ### Do Not Use `null`
-In general, we want to limit the use of `null`. In `Mt.Domain`, we do **not allow** `null` at all.
+In general, we want to limit the use of `null`. In `Kimrs.Domain`, we do **not allow** `null` at all.
 For implications of using `null`, see [above](#enable-nullable-for-new-projects).
 
 If you find yourself wanting to use `null`, reconsider why your design requires it. Ask:
@@ -320,7 +322,7 @@ All domain objects must have a `Create` method that validates input and returns
 either a successful instance or a validation failure.
 This is the **only allowed way** to instantiate domain objects.
 
-`Mt.Results` contains a `Result<T>` type that we use to indicate success or failure.
+`Kimrs.Results` contains a `Result<T>` type that we use to indicate success or failure.
 
 ### ✅ Do:
 ```csharp

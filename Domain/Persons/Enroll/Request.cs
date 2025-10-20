@@ -1,4 +1,4 @@
-﻿namespace Domain.Persons.Create;
+﻿namespace Domain.Persons.Enroll;
 
 public class Request
 {

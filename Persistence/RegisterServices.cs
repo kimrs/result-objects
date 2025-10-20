@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Repositories.Persons;
+﻿using Domain.Persons.Enroll;
+using Microsoft.Extensions.DependencyInjection;
+using Persistence.Persons;
 
-namespace Repositories;
+namespace Persistence;
 
 public static class RegisterServices
 {
@@ -9,5 +10,5 @@ public static class RegisterServices
         => services
             .AddSingleton<Repository>()
             .AddSingleton<Domain.Persons.GetAll.IRepository>(sp => sp.GetRequiredService<Repository>())
-            .AddSingleton<Domain.Persons.Create.IRepository>(sp => sp.GetRequiredService<Repository>());
+            .AddSingleton<IRepository>(sp => sp.GetRequiredService<Repository>());
 }

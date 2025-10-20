@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{0DAA5B4D-195F-47B9-B0AC-48AD671589A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{FE3C35A3-F5EF-4713-9AC5-58E8982FEF69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{FE3C35A3-F5EF-4713-9AC5-58E8982FEF69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

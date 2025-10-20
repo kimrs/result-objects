@@ -4,19 +4,15 @@ namespace Domain;
 
 public class Name
 {
-    private string _value;
+    private readonly string _value;
     private Name(string value) => _value = value;
 
-    private class NameTooLongException() : DomainException("The name is too long.");
     public static Result<Name> Create(string value)
-    {
-        if (value.Length > 10)
-        {
-            return new NameTooLongException();
-        }
-
-        return new Name(value);
-    }
+        => value
+            .FailWhen(x => !x.All(char.IsLetter), $"{nameof(Name)} can only contain letters.")
+            .FailWhen(x => x.Length > 100, $"{nameof(Name)} can not be longer than 100 characters.")
+            .FailWhen(x => x.Length <= 1, $"{nameof(Name)} must be longer than 1 character.")
+            .Then(x => new Name(x));
     
     public override string ToString() => _value;
 }

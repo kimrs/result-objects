@@ -1,5 +1,4 @@
-﻿using Domain;
-using Results;
+﻿using Results;
 
 namespace Api;
 
@@ -11,7 +10,7 @@ public static class Extensions
         return result switch
         {
             Completed<T> c => onCompleted(c.Value),
-            Exceptional<T> { Exception: DomainException e } => Microsoft.AspNetCore.Http.Results.BadRequest(e.Message),
+            InvalidInput<T> vf => Microsoft.AspNetCore.Http.Results.BadRequest(vf.Failures),
             _ => Microsoft.AspNetCore.Http.Results.InternalServerError()
         };
     }

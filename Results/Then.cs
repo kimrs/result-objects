@@ -8,8 +8,8 @@ public static partial class Extensions
     ) => result switch
     {
         Completed<T> c => f(c.Value),
-        Exceptional<T> e => e.Exception,
-        _ => new ArgumentOutOfRangeException(nameof(result))
+        InvalidInput<T> e => e.Failures,
+        _ => throw new ArgumentOutOfRangeException(nameof(result))
     };
     
     public static Result<TR> Then<T, TR>(
@@ -28,8 +28,8 @@ public static partial class Extensions
     ) => result switch
     {
         Completed<T> c => await f(c.Value),
-        Exceptional<T> e => e.Exception,
-        _ => new ArgumentOutOfRangeException(nameof(result))
+        InvalidInput<T> vf => vf.Failures,
+        _ => throw new ArgumentOutOfRangeException(nameof(result))
     };
 
     public static async Task<Result<TR>> Then<T, TR>(
